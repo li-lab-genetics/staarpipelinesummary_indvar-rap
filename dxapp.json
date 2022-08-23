@@ -1,0 +1,177 @@
+{
+  "name": "staarpipelinesummary_indvar_v0.9.6",
+  "title": "Extracting Information of Individual Variants from a Gene Category or Genetic Region",
+  "summary": "This is a pipeline applet to extract information of individual variants from a user-specified variant-set (gene category or genetic region) in downstream analysis of STAAR procedure for analyzing whole-genome/whole-exome sequencing data. For more details about this applet, please see the user manual at https://tinyurl.com/staarpipeline",
+  "description": "For all analyses using this applet, an instance type of \"mem2_ssd1_v2_x8\" is recommended.",
+  "dxapi": "1.0.0",
+  "version": "0.9.6",
+  "inputSpec": [
+    {
+      "name": "outfile",
+      "label": "Output file prefix",
+      "help": "Prefix of output file name. The output result files will be multiple .Rdata and .csv objects.",
+      "class": "string",
+      "optional": false
+    },
+    {
+      "name": "test_type",
+      "label": "Valid tests: \"Gene_Centric_Coding\", \"Gene_Centric_Noncoding\", \"ncRNA\", \"Sliding_Window\"",
+      "help": "Only \"Gene_Centric_Coding\", \"Gene_Centric_Noncoding\", \"ncRNA\", \"Sliding_Window\" are valid test types.",
+      "class": "string",
+      "optional": false
+    },
+    {
+      "name": "nullobj_file",
+      "label": "Null model",
+      "help": "An R object saving the fitted null mixed model from STAAR. Must be an .RData or .Rda file.",
+      "class": "file",
+      "patterns": ["*.RData", "*.Rdata", "*.Rda"],
+      "optional": false
+    },
+    {
+      "name": "chromosome",
+      "label": "Chromosome (1 - 22)",
+      "help": "Chromosome number of the gene category or genetic region (for autosome only).",
+      "class": "int",
+      "optional": false
+    },
+    {
+      "name": "agds_file",
+      "label": "AGDS file",
+      "help": "Genotype and functional annotation all-in-one GDS (AGDS) file in .gds format. Must be consistent with the user-specified chromosome.",
+      "class": "file",
+      "patterns": ["*.gds"],
+      "optional": false
+    },
+    {
+      "name": "annotation_name_catalog_file",
+      "label": "Annotation name catalog",
+      "help": "A comma separated values (.csv) file containing the name (\"name\") and the corresponding channel name (\"dir\") in the AGDS files. If the AGDS files are generated using FAVORannotator, the .csv file can be downloaded from https://github.com/xihaoli/STAARpipeline-Tutorial/tree/main/FAVORannotator_csv/annotation_name_catalog.csv. Must be provided if performing conditional analysis.",
+      "class": "file",
+      "patterns": ["*.csv"],
+      "optional": false
+    },
+    {
+      "name": "known_varlist_4columns",
+      "label": "Known variant list (4 columns)",
+      "help": "A comma separated values (.csv) file (first row is the header) saving the known variant list in 4 columns format to be adjusted for in conditional analysis. The file must include 4 columns with the following names: \"CHR\" (chromosome number), \"POS\" (position), \"REF\" (reference allele), and \"ALT\" (alternative allele).",
+      "class": "file",
+      "patterns": ["*.csv"],
+      "optional": true
+    },
+    {
+      "name": "gene_name",
+      "label": "Gene name",
+      "help": "Gene name of the gene category (for \"Gene_Centric_Coding\", \"Gene_Centric_Noncoding\", and \"ncRNA\" only). If not specified, \"PCSK9\" will be used as the default (for placeholder).",
+      "class": "string",
+      "optional": true,
+      "default": "PCSK9"
+    },
+    {
+      "name": "category",
+      "label": "Functional category",
+      "help": "Functional category of the gene category (for \"Gene_Centric_Coding\" and \"Gene_Centric_Noncoding\" only). For \"Gene_Centric_Coding\", the valid functional category includes \"plof\", \"plof_ds\", \"missense\", \"disruptive_missense\", \"synonymous\". For \"Gene_Centric_Noncoding\", the valid functional category includes \"promoter_CAGE\", \"promoter_DHS\", \"enhancer_CAGE\", \"enhancer_DHS\", \"UTR\", \"upstream\", \"downstream\". If not specified, \"plof\" will be used as the default (for placeholder).",
+      "class": "string",
+      "optional": true,
+      "default": "plof"
+    },
+    {
+      "name": "start_loc",
+      "label": "Start location",
+      "help": "Start location of the genetic region (for \"Sliding_Window only\").",
+      "class": "int",
+      "optional": true,
+      "default": 1
+    },
+    {
+      "name": "end_loc",
+      "label": "End location",
+      "help": "End location of the genetic region (for \"Sliding_Window only\").",
+      "class": "int",
+      "optional": true,
+      "default": 2000
+    },
+    {
+      "name": "max_maf",
+      "label": "Maximum minor allele frequency for a variant to be included in variant-set test (\"Gene_Centric_Coding\", \"Gene_Centric_Noncoding\", \"ncRNA\", \"Sliding_Window\")",
+      "help": "Note this is the maximum minor allele frequency, not the alternate (coding) allele frequency. If not specified, 0.01 will be used as the default (to perform variant-set analysis for rare variants).",
+      "class": "float",
+      "optional": true,
+      "default": 0.01
+    },
+    {
+      "name": "qc_label_dir",
+      "label": "Channel name of the QC label in the AGDS file",
+      "help": "Channel name of the QC label in the AGDS file, where PASS variants should be labeled as \"PASS\". If not specified, \"annotation/filter\" will be used as the default.",
+      "class": "string",
+      "optional": true,
+      "default": "annotation/filter"
+    },
+    {
+      "name": "variant_type",
+      "label": "Type of variant included in the analysis",
+      "help": "Type of variant included in the analysis. Choices include \"SNV\", \"Indel\", or \"variant\". If not specified, \"SNV\" will be used as the default.",
+      "class": "string",
+      "optional": true,
+      "default": "SNV"
+    },
+    {
+      "name": "geno_missing_imputation",
+      "label": "Method of handling missing genotypes",
+      "help": "Method of handling missing genotypes. Either \"mean\" or \"minor\". If not specified, \"mean\" will be used as the default.",
+      "class": "string",
+      "optional": true,
+      "default": "mean"
+    },
+    {
+      "name": "annotation_dir",
+      "label": "Channel name of the annotations in the AGDS file",
+      "help": "Channel name of the annotations in the AGDS file. If not specified, \"annotation/info/FunctionalAnnotation\" will be used as the default, which is consistent with FAVORannotator.",
+      "class": "string",
+      "optional": true,
+      "default": "annotation/info/FunctionalAnnotation"
+    },
+    {
+      "name": "annotation_name",
+      "label": "Basic annotations and annotations used in STAAR (multiple annotations should be comma-separated, with no space, like \"rs_num,aPC.Conservation,aPC.Protein\")",
+      "help": "Basic annotations and annotations used in STAAR. Should be a subset of annotations in the annotation_name_catalog_file (if multiple annotations, they should be comma-separated, with no space, like \"rs_num,aPC.Conservation,aPC.Protein\"). If not specified, \"rs_num,GENCODE.Category,GENCODE.EXONIC.Category,MetaSVM,CAGE,DHS,GeneHancer,CADD,LINSIGHT,FATHMM.XF,aPC.EpigeneticActive,aPC.EpigeneticRepressed,aPC.EpigeneticTranscription,aPC.Conservation,aPC.LocalDiversity,aPC.Mappability,aPC.TF,aPC.Protein\" will be used as the default, which is consistent with FAVORannotator.",
+      "class": "string",
+      "optional": true,
+      "default": "rs_num,GENCODE.Category,GENCODE.EXONIC.Category,MetaSVM,CAGE,DHS,GeneHancer,CADD,LINSIGHT,FATHMM.XF,aPC.EpigeneticActive,aPC.EpigeneticRepressed,aPC.EpigeneticTranscription,aPC.Conservation,aPC.LocalDiversity,aPC.Mappability,aPC.TF,aPC.Protein"
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "results",
+      "help": "",
+      "class": "file",
+      "patterns": ["*"]
+    }
+  ],
+  "runSpec": {
+    "file": "src/code.sh",
+    "release": "16.04",
+    "interpreter": "bash",
+    "timeoutPolicy": {
+      "*": {
+        "days": 7
+      }
+    },
+    "distribution": "Ubuntu"
+  },
+  "access": {
+    "network": [
+      "*"
+    ]
+  },
+  "ignoreReuse": false,
+  "regionalOptions": {
+    "aws:us-east-1": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem2_ssd1_v2_x8"
+        }
+      }
+    }
+  }
+}
