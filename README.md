@@ -5,7 +5,7 @@ For more information about how to run or modify it, see
 https://documentation.dnanexus.com/.
 
 ### Applet Usage
-The **staarpipelinesummary_indvar** app can extract information (summary statistics) of individual variants from a user-specified variant set (gene category or genetic region), e.g. a genome-wide significant variant set generated from the <a href="https://github.com/xihaoli/staarpipeline-rap">**staarpipeline**</a> app and summarized from the <a href="https://github.com/xihaoli/staarpipelinesummary_varset-rap">**staarpipelinesummary_varset**</a> app, in the analytical follow-up of STAARpipeline.
+The **staarpipelinesummary_indvar** app can extract information (summary statistics) of individual variants from a user-specified variant set (gene category or genetic region), e.g. a genome-wide significant variant set detected from the <a href="https://github.com/xihaoli/staarpipeline-rap">**staarpipeline**</a> app and summarized from the <a href="https://github.com/xihaoli/staarpipelinesummary_varset-rap">**staarpipelinesummary_varset**</a> app, in the analytical follow-up of STAARpipeline.
 
 Please see the <a href="https://tinyurl.com/staarpipeline">**user manual and tutorial**</a> for detailed usage of staarpipelinesummary_indvar app.
 
