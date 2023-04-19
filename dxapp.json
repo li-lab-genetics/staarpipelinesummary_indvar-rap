@@ -1,5 +1,5 @@
 {
-  "name": "staarpipelinesummary_indvar_v0.9.6",
+  "name": "staarpipelinesummary_indvar",
   "title": "Extracting Information of Individual Variants from a Gene Category or Genetic Region",
   "summary": "This is a pipeline applet to extract information of individual variants from a user-specified variant-set (gene category or genetic region) in downstream analysis of STAAR procedure for analyzing whole-genome/whole-exome sequencing data. For more details about this applet, please see the user manual at https://tinyurl.com/staarpipeline",
   "description": "For all analyses using this applet, an instance type of \"mem2_ssd1_v2_x8\" is recommended.",
@@ -166,7 +166,7 @@
   },
   "ignoreReuse": false,
   "regionalOptions": {
-    "aws:us-east-1": {
+    "aws:eu-west-2": {
       "systemRequirements": {
         "*": {
           "instanceType": "mem2_ssd1_v2_x8"
