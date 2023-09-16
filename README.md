@@ -15,7 +15,7 @@ To acquire the staarpipelinesummary_indvar applet, you will need to compile this
 1. Clone this github repo to some directory:
 
 ```commandline
-git clone https://github.com/xihaoli/staarpipelinesummary_indvar-rap.git
+git clone https://github.com/li-lab-genetics/staarpipelinesummary_indvar-rap.git
 ```
 
 This will create a folder named staarpipelinesummary_indvar-rap, you can then:
