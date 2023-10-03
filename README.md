@@ -7,7 +7,7 @@ https://documentation.dnanexus.com.
 ### Applet Usage
 The **staarpipelinesummary_indvar** app can extract information (summary statistics) of individual variants from a user-specified variant set (gene category or genetic region), e.g. a genome-wide significant variant set detected from the <a href="https://github.com/li-lab-genetics/staarpipeline-rap">**staarpipeline**</a> app and summarized from the <a href="https://github.com/li-lab-genetics/staarpipelinesummary_varset-rap">**staarpipelinesummary_varset**</a> app, in the analytical follow-up of STAARpipeline.
 
-Please see the <a href="https://tinyurl.com/staarpipeline">**user manual and tutorial**</a> for detailed usage of staarpipelinesummary_indvar app.
+Please see the <a href="https://tinyurl.com/staarpipelineapps">**user manual and tutorial**</a> for detailed usage of staarpipelinesummary_indvar app.
 
 ### Cloning an Applet
 To acquire the staarpipelinesummary_indvar applet, you will need to compile this applet for your respective DNANexus project, by cloning the repository from github and `dx build` an APPLET into your own workspace.
